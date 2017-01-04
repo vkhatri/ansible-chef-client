@@ -1,0 +1,5 @@
+---
+- name: restart_chef_client_service
+  service:
+    name: chef-client
+    state: restarted

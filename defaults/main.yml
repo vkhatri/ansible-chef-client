@@ -1,0 +1,80 @@
+---
+chef_client:
+  bin: /usr/bin/chef-client
+  version: "12.17.44"
+  install_type: package
+  config_type: client # options: client, solo
+
+  yum_repository:
+    name: chef
+    description: Chef Packages Repository
+    baseurl: "https://packages.chef.io/repos/yum/stable/el/{{ ansible_distribution_major_version }}/$basearch/"
+    gpgkey: https://packages.chef.io/chef.asc
+    gpgcheck: yes
+    enabled: yes
+
+  apt_repository:
+    repo: "deb https://packages.chef.io/repos/apt/stable {{ ansible_distribution_release }} main"
+    filename: chef
+    update_cache: yes
+    key: "https://packages.chef.io/chef.asc"
+
+  client:
+    base_dir: /etc/chef
+    pid_dir: /var/run/chef
+    sysconfig_file: /etc/sysconfig/chef-client
+    daemon_opts: []
+    enable_service: true
+    dirs:
+      - /etc/chef
+      - /etc/chef/client.d
+      - /etc/chef/ohai
+      - /etc/chef/ohai/hints
+      - /etc/chef/ohai/plugins
+      - /var/log/chef
+      - /var/run/chef
+
+    config_file: /etc/chef/client.rb # need to check whether it can refer chef_client['client']['conf_dir']
+    config:
+      chef_server_url: "https://chef-server/organizations/foo"
+      client_key: "/etc/chef/client.pem"
+      client_registration_retries: 3
+      diff_disabled: "false"
+      enable_reporting: "false"
+      enable_selinux_file_permission_fixup: "false"
+      environment: "production"
+      file_atomic_update: "true"
+      group: "nil"
+      interval: 3600
+      json_attribs: "/etc/chef/client.json"
+      log_level: ":info"
+      log_location: "/var/log/chef/client.log"
+      rest_timeout: 30
+      splay: 60
+      ssl_verify_mode: "verify_none"
+      user: "nil"
+      validation_client_name: "chef-validator"
+      validation_key: "/etc/chef/chef-validator.pem"
+      verbose_logging: "false"
+      verify_api_cert: "false"
+      node_name: "localhost.localdomain"
+
+  solo:
+    base_dir: /etc/chef-solo
+    dirs:
+      - /etc/chef-solo
+      - /etc/chef-solo/environments
+      - /etc/chef-solo/roles
+      - /etc/chef-solo/data_bags
+      - /etc/chef-solo/cookbooks
+      - /var/log/chef
+
+    config:
+      config_file: "/etc/chef/solo/solo.rb"
+      node_json_file: "/etc/chef/solo/solo.json"
+      environments_dir: "/etc/chef/solo/environments"
+      roles_dir: "/etc/chef/solo/roles"
+      data_bags_dir: "/etc/chef/solo/data_bags"
+      cookbooks_dir: "/etc/chef/solo/cookbooks"
+
+

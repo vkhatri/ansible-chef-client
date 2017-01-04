@@ -1,0 +1,16 @@
+---
+#- name: "include os variables"
+#  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: "chef yum repo"
+  yum_repository:
+    name: "{{ chef_client['yum_repository']['name'] }}"
+    description: "{{ chef_client['yum_repository']['description'] }}"
+    baseurl:  "{{ chef_client['yum_repository']['baseurl'] }}"
+    gpgkey: "{{ chef_client['yum_repository']['gpgkey'] }}"
+    gpgcheck: "{{ chef_client['yum_repository']['gpgcheck'] }}"
+    enabled: "{{ chef_client['yum_repository']['enabled'] }}"
+
+- name: "chef package"
+  yum:
+    name: chef-{{ chef_client['version'] }}

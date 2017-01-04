@@ -1,0 +1,4 @@
+---
+- name: "include install_package_{{ ansible_os_family }}.yml"
+  include: install_package_{{ ansible_os_family }}.yml
+

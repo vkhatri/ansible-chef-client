@@ -1,0 +1,30 @@
+galaxy_info:
+  author: Virender Khatri
+  description: "Install and Configure Chef Client/Solo"
+  issue_tracker_url: https://github.com/vkhatri/ansible-chef-client/issues
+  license: license Apache 2.0
+  min_ansible_version: 2.2.0.0
+  github_branch: master
+
+  platforms:
+  - name: Amazon
+    versions:
+    - all
+  #  - 2013.03
+  #  - 2013.09
+  #  - 2016.03
+  #  - 2016.09
+  - name: Ubuntu
+    versions:
+    - trusty
+  - name: EL
+    versions:
+    - 6
+
+  categories:
+  - packaging
+  - system
+  galaxy_tags:
+  - "chef-client"
+
+dependencies: []

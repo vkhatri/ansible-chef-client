@@ -1,0 +1,16 @@
+# Configuration file for the chef-client service
+
+CONFIG={{ chef_client['client']['base_dir'] }}/client.rb
+PIDFILE={{ chef_client['client']['pid_dir'] }}/client.pid
+LOCKFILE=/var/lock/subsys/chef-client
+
+# Sleep interval between runs.
+# This value is in seconds.
+INTERVAL={{ chef_client['client']['config']['interval'] }}
+
+# Maximum amount of random delay before starting a run. Prevents every client
+# from contacting the server at the exact same time.
+# This value is in seconds.
+SPLAY={{ chef_client['client']['config']['splay'] }}
+# Any additional chef-client options.
+OPTIONS="{{ ' '.join(chef_client['client']['daemon_opts']) }}"

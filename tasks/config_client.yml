@@ -1,0 +1,45 @@
+---
+
+- name: "create chef-{{ chef_client['config_type'] }} directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items: "{{ chef_client['client']['dirs'] }}"
+  notify:
+    - restart_chef_client_service
+
+- name: "client.rb config template"
+  template:
+    src: client.rb.j2
+    dest: "{{ chef_client['client']['base_dir'] }}/client.rb"
+  notify:
+    - restart_chef_client_service
+
+- name: "chef-client sysv initd template"
+  template:
+    src: "platform_family_{{ ansible_os_family }}_initd.j2"
+    dest: /etc/init.d/chef-client
+    mode: 0500
+  notify:
+    - restart_chef_client_service
+
+- name: "chef-client service sysconfig template"
+  template:
+    src: "platform_family_{{ ansible_os_family }}_sysconfig.j2"
+    dest: "{{ chef_client['client']['sysconfig_file'] }}"
+  notify:
+    - restart_chef_client_service
+
+- copy:
+    dest: /etc/chef/client.json
+    content: "{}"
+
+- copy:
+    dest: /etc/chef/ohai/hints/ec2.json
+    content: "{}"
+
+- name: "start chef-client service"
+  service:
+    name: chef-client
+    state: started
+

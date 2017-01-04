@@ -1,0 +1,11 @@
+---
+
+- name: "include platform_family_{{ ansible_os_family }}.yml"
+  include_vars: "platform_family_{{ ansible_os_family }}.yml"
+
+- name: "include platform_{{ ansible_distribution }}.yml"
+  include_vars: "platform_{{ ansible_distribution }}.yml"
+
+- include: "install_{{ chef_client['install_type'] }}.yml"
+
+- include: "config_{{ chef_client['config_type'] }}.yml"

@@ -1,0 +1,15 @@
+---
+#- name: "include {{ ansible_distribution }} platform family variables"
+#  include_vars: "{{ ansible_distribution }}.yml"
+
+- apt_key:
+    url: "{{ chef_client['apt_repository']['key'] }}"
+
+- apt_repository:
+    repo: "{{ chef_client['apt_repository']['repo'] }}"
+    filename: "{{ chef_client['apt_repository']['filename'] }}"
+    update_cache: "{{ chef_client['apt_repository']['update_cache'] }}"
+
+- name: "chef package"
+  apt:
+    name: chef={{ chef_client['version'] }}-1

@@ -1,0 +1,4 @@
+---
+chef_client:
+  yum_repository:
+    baseurl: "https://packages.chef.io/repos/yum/stable/el/6/$basearch/"
